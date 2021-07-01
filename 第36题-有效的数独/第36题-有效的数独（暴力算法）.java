@@ -4,7 +4,7 @@ class Solution {
         if(!isValidColumn(board)) {
           isValidSudoku = false;
         }
-        if(!isValidColumn(board)) {
+        if(!isValidRow(board)) {
           isValidSudoku = false;
         }
         if(!isValidNines(board)) {
@@ -33,7 +33,7 @@ class Solution {
         Set charSet = new HashSet<String>();
         for(int j=0; j < 9;j++) {
           if(board[j][i] != '.') {
-            if(!charSet.add(board[i][j])){
+            if(!charSet.add(board[j][i])){
               return false;
             }
           }
@@ -48,11 +48,11 @@ class Solution {
       boolean isValidNine = true;
       while(isValidNine && x < 7){
         y = 0;
-        while(y < 7) {
-          isValidNine = isValidNine(board, x, y );
-          y ++;
+        while(isValidNine && y < 7) {
+          isValidNine = isValidNine(board, x, y);
+          y = y + 3;
         }
-        x = x +3;
+        x = x + 3;
       }
 
       return isValidNine;
@@ -60,9 +60,11 @@ class Solution {
 
     private boolean isValidNine(char[][] board, int x, int y) {
       Set charSet = new HashSet<String>();
-      for(int i = x; i< i+3; i ++) {
-        for(int j = y; j< j+3; j++) {
-          if(board[j][i] != '.') {
+      //这样写是不对的
+      //for(int i = x; i< i+3; i ++)
+      for(int i = x; i< x+3; i ++) {
+        for(int j = y; j< y+3; j++) {
+          if(board[i][j] != '.') {
             if(!charSet.add(board[i][j])){
               return false;
             }
